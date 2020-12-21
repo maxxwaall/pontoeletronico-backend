@@ -1,10 +1,12 @@
 module.exports = function(client, registerNumber, res) {
 
+    var now = buildDate();
+    
     client.query(
         `INSERT INTO salesforce.dailyrecord__c (RegisterNumber__c, Time__c) 
             VALUES (
                 '${registerNumber}', 
-                '2020-12-12T04:20:56.000Z'
+                '${now}'
             )
         `, 
         function (error, data){
@@ -16,4 +18,12 @@ module.exports = function(client, registerNumber, res) {
     client.query('SELECT * FROM salesforce.dailyrecord__c', function(error, data) {
         res.json(data.rows);
     });
+
+    function buildDate(){
+
+        var now = new Date();
+        
+        return now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() + 
+                'T' + now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds() + '.000Z';
+    }
 }

@@ -7,8 +7,8 @@ routes.post('/dailyrecord/', function (req, res) {
     require('./models/saveDailyRecord.js')(db, req.body.RegisterNumber, res);
 });
 
-routes.get('/dailyrecord/', function(req, res) {
-    require('./models/getDailyRecords.js')(db, res);
+routes.get('/dailyrecord/:registerNumber', function(req, res) {
+    require('./models/getDailyRecords.js')(db, res, req.params.registerNumber);
 });
 
 module.exports = routes;
